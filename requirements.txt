@@ -1,0 +1,6 @@
+typer
+ruff
+rich
+pypdf
+google-genai
+python-dotenv

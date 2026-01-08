@@ -16,5 +16,5 @@ def frequenza_caratteri(testo: str) -> Dict[str, int]:
     return frequenze
 
 def conta_parole(testo: str) -> int:
-    '''Restituisce il numero totale di parole nella stringa, spazi inclusi.'''
+    '''Restituisce il numero totale di parole nella stringa, spazi esclusi.'''
     return len(testo.split())
