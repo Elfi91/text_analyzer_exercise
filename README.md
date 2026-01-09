@@ -14,7 +14,7 @@
   - Avvisi automatici per termini ricorrenti (più di 5 occorrenze).
 - 🧠 **Riassunti Intelligenti con AI**:
   - Integrazione con **Google Gemini 2.5 Flash**.
-  - **Supporto Multilingua**: Generazione di riassunti sia in **Italiano** che in **Inglese**.
+  - **Supporto Multilingua**: Generazione di riassunti in **Italiano**, **Inglese** e **Tedesco**.
   - Formattazione elegante in Markdown con pannelli visivi.
 - 🎨 **Interfaccia Premium**:
   - Menu interattivo basato su **Typer** e **Rich**.

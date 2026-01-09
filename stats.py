@@ -66,6 +66,14 @@ def get_ai_summary(text: str, target_language: str = "Italiano") -> str:
                 "Organize the summary with bullet points if necessary and highlight key concepts.\n\n"
                 f"Text to analyze:\n{text_preview}"
             )
+        elif target_language.lower() == "tedesco":
+            prompt = (
+                "Agiere als erfahrener Dokumentenanalyst. "
+                "Erstelle eine detaillierte, aber prägnante Zusammenfassung des folgenden Textes in DEUTSCHER Sprache. "
+                "Organisiere die Zusammenfassung mit Aufzählungspunkten. "
+                "WICHTIG: Lasse immer eine Leerzeile zwischen den Absätzen und den Aufzählungspunkten, um die Lesbarkeit zu maximieren.\n\n"
+                f"Zu analysierender Text:\n{text_preview}"
+            )
         else:
             prompt = (
                 "Agisci come un analista di documenti esperto. "

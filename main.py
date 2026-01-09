@@ -118,10 +118,12 @@ def show_file_menu(file_path: Path, clean_text: str, statistics: dict):
         elif choice == "3":
             console.print("\n[bold cyan]In che lingua vuoi il riassunto?[/bold cyan]")
             console.print("1. Italiano")
-            console.print("2. Inglese")
-            lang_choice = Prompt.ask("Seleziona", choices=["1", "2"], default="1")
+            console.print("2. English")
+            console.print("3. Deutsch")
+            lang_choice = Prompt.ask("Seleziona", choices=["1", "2", "3"], default="1")
             
-            target_lang = "Italiano" if lang_choice == "1" else "Inglese"
+            lang_map = {"1": "Italiano", "2": "English", "3": "Deutsch"}
+            target_lang = lang_map.get(lang_choice, "Italiano")
             
             console.print(f"\n[italic]Generazione riassunto in {target_lang} in corso con Gemini...[/italic] ⏳")
             summary_text = stats.get_ai_summary(clean_text, target_language=target_lang)
