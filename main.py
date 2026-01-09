@@ -2,7 +2,9 @@ import typer
 from pathlib import Path
 from rich.console import Console
 from rich.table import Table
-from rich.prompt import Confirm, Prompt, IntPrompt
+from rich.prompt import Confirm, Prompt
+from rich.markdown import Markdown
+from rich.panel import Panel
 import stats
 
 app = typer.Typer()
@@ -114,9 +116,20 @@ def show_file_menu(file_path: Path, clean_text: str, statistics: dict):
                  console.print(f"\n[dim]Ci sono {len(common_words)} parole che compaiono più di 5 volte.[/dim]")
 
         elif choice == "3":
-            console.print("\n[italic]Generazione riassunto in corso con Gemini...[/italic] ⏳")
-            summary = stats.get_ai_summary(clean_text)
-            console.print(f"\n[bold cyan]AI Summary:[/bold cyan]\n{summary}\n")
+            console.print("\n[bold cyan]In che lingua vuoi il riassunto?[/bold cyan]")
+            console.print("1. Italiano")
+            console.print("2. Inglese")
+            lang_choice = Prompt.ask("Seleziona", choices=["1", "2"], default="1")
+            
+            target_lang = "Italiano" if lang_choice == "1" else "Inglese"
+            
+            console.print(f"\n[italic]Generazione riassunto in {target_lang} in corso con Gemini...[/italic] ⏳")
+            summary_text = stats.get_ai_summary(clean_text, target_language=target_lang)
+            
+            # Rendering bellissimo con Markdown e Panel
+            md = Markdown(summary_text)
+            console.print(Panel(md, title=f"AI Summary ({target_lang})", border_style="cyan", expand=False, padding=(1, 2)))
+            console.print("")
 
         elif choice == "4":
             return "BACK_TO_LIST"

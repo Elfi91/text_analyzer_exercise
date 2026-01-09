@@ -37,12 +37,13 @@ def extract_text(path: Path) -> str:
     else:
         raise NotImplementedError(f"Extension {path.suffix} not supported yet.")
 
-def get_ai_summary(text: str) -> str:
+def get_ai_summary(text: str, target_language: str = "Italiano") -> str:
     """
-    Generates a summary of the text using Google Gemini API.
+    Generates a summary of the text using Google Gemini API in the specified language.
     
     Args:
         text (str): The text to summarize.
+        target_language (str): The language for the summary.
         
     Returns:
         str: The generated summary or an error message.
@@ -54,12 +55,25 @@ def get_ai_summary(text: str) -> str:
     try:
         client = genai.Client(api_key=api_key)
         
-        # Truncate text if too long to avoid token limits (basic safety)
-        # Gemini Pro has a large context window but let's be safe for very huge books
-        MAX_CHAR_PREVIEW = 30000 
+        # Truncate text if too long
+        MAX_CHAR_PREVIEW = 25000 
         text_preview = text[:MAX_CHAR_PREVIEW]
         
-        prompt = f"Fai un riassunto conciso e ben strutturato in italiano del seguente testo:\n\n{text_preview}"
+        if target_language.lower() == "inglese":
+            prompt = (
+                "Act as an expert document analyst. "
+                "Provide a detailed yet concise summary of the following text in ENGLISH. "
+                "Organize the summary with bullet points if necessary and highlight key concepts.\n\n"
+                f"Text to analyze:\n{text_preview}"
+            )
+        else:
+            prompt = (
+                "Agisci come un analista di documenti esperto. "
+                "Fai un riassunto dettagliato ma conciso del seguente testo in lingua ITALIANA. "
+                "Organizza il riassunto con punti elenco. "
+                "IMPORTANTE: Lascia sempre una riga vuota tra ogni paragrafo e tra i punti elenco per massimizzare la leggibilità.\n\n"
+                f"Testo da analizzare:\n{text_preview}"
+            )
         
         response = client.models.generate_content(
             model="gemini-2.5-flash", # Il modello più stabile e con più quota per il piano gratuito
